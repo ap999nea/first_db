@@ -61,5 +61,6 @@ model postTag {
 model testModel {
   id Int @id @default(autoincrement())
   comment String
+  important Boolean @default(false)
 }
 
