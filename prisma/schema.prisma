@@ -1,0 +1,65 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// Per creare la nostra prima TABELLA SQL
+// Dobbiamo fare in modo che il DB rispecchi questo schema = npx prisma db push --preview-feature
+// Prisma generate: Da questo schema dobbiamo generare il codice/libreria per utilizzare prisma in TS // npx prisma generate
+model User {
+  id    Int    @id @default(autoincrement()) //@id unico, @default(autoincrement()) per aumentare ogni id
+  email String @unique
+  name  String
+  age   Int // Int = intero
+
+  // INDICE, unicizzare gli utenti x uno o più campi => fare ricerce più veloci
+
+  Post    Post[]
+  Profile Profile? //? OBBLIGATORIO
+  @@index([age])
+}
+
+// ONE2ONE
+model Profile {
+  id     Int     @id @default(autoincrement())
+  bio    String
+  avatar String?
+
+  user   User @relation(fields: [userId], references: [id])
+  userId Int  @unique
+}
+
+// ONE2MANY => un utente  collegato a più post
+model Post {
+  id           Int       @id @default(autoincrement())
+  title        String
+  description  String?
+  creationTime DateTime  @default(now())
+  publishTime  DateTime  @default(now())
+  content      String
+  autor        User      @relation(fields: [userId], references: [id])
+  userId       Int
+  tags         postTag[]
+
+  @@unique([id, userId])
+}
+
+// MANY2MANY => tag collegati a più post
+model postTag {
+  id    Int    @id @default(autoincrement())
+  tag   String @unique
+  posts Post[]
+}
+
+model testModel {
+  id Int @id @default(autoincrement())
+  comment String
+}
+
