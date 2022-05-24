@@ -21,15 +21,19 @@ const prisma = new PrismaClient();
     process.exit(0);
   } */
 
+console.log("Hey there!");
+
 const myPromise = new Promise<string>((resolve, reject) => {
   setTimeout(() => resolve("ciao"), 1000);
 });
 
-async function printUsers() {
+/* async function printUsers() {
   const users = await prisma.user.findMany();
   console.log("All users:", users);
 }
 
+printUsers().then(() => process.exit(0));
+ */
 /* async function main() {
   const usersPerAge = await prisma.user.findMany({
     orderBy: {
@@ -126,24 +130,6 @@ createUser().then(() => process.exit(0)); */
 
 //main().then(() => process.exit(0));
 
-/* async function createTag() {
-  const postTag1 = await prisma.postTag.create({
-    data: {
-      tag: "Tag1",
-      posts: {
-        connect: [
-          {
-            id: 1,
-          },
-          {
-            id: 2,
-          },
-        ],
-      },
-    },
-  });
-}
-createTag().then(process.exit(0)); */
 /*model Comment {
   id           Int      @id @default(autoincrement())
   comment      String
@@ -153,34 +139,76 @@ createTag().then(process.exit(0)); */
   posts Post[]
 } */
 
-async function main() {
-  const profile = await prisma.profile.create({
-    data: {
-      bio: "La mia bio",
-      avatar: "Il mio avatar omaticaya",
-      user: {
-        connect: {
-          id: 2,
-        },
+/*async function createUser() {
+  try {
+    const user = await prisma.user.create({
+      data: {
+        age: 23,
+        email: "ovidiu@paunas.xp",
+        name: "Ovidiu Paunas",
       },
-    },
-  });
+    });
+    console.log("Utente creato: ", user);
+  } catch (error) {
+    console.log("Non riesco a creare l'utente");
+  }
 }
 
-main().then(process.exit(0));
+createUser().then(() => process.exit(0));*/
 
-async function createPost() {
-  const post = await prisma.post.create({
-    data: {
-      title: "Il mio post",
-      content: "Whoa life is good you know what I mean..?",
-      autor: {
-        connect: {
-          id: 2,
+/*async function createPost() {
+  try {
+    const post = await prisma.post.create({
+      data: {
+        title: "Nuovo post",
+        content: "Whoa life is good you know what I mean..? PT.2",
+        autor: {
+          connect: {
+            id: 3,
+          },
         },
       },
-    },
-  });
+    });
+    console.log("Post creato: ", post);
+  } catch (error) {
+    console.log("Cannot create post");
+  }
 }
 
-createPost().then(process.exit(0));
+createPost().then(() => process.exit(0));*/
+
+/*async function createTag() {
+  try {
+    const postTag3 = await prisma.postTag.create({
+      data: {
+        tag: "Tag3",
+        posts: {
+          connect: {
+            id: 1,
+          },
+        },
+      },
+    });
+    console.log("Tag creato: ", postTag3);
+  } catch (error) {
+    console.log("Cannot create tag");
+  }
+}
+createTag().then(() => process.exit(0));
+
+/* async function createProfile() {
+  try {
+    const profile = await prisma.profile.create({
+      data: {
+        bio: "Sono Giulia",
+        avatar: "Mi piace studiare",
+        userId: 2,
+      },
+    });
+    console.log("Profilo creato, ", profile);
+  } catch (error) {
+    console.log("Cannot create profile, ", error);
+  }
+}
+
+createProfile().then(() => process.exit); */
